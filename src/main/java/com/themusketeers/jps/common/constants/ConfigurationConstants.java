@@ -1,26 +1,24 @@
 /*----------------------------------------------------------------------------*/
-/* Source File:   APPLICATIONTESTS.JAVA                                       */
+/* Source File:   CONFIGURATIONCONSTANTS.JAVA                                 */
 /* Copyright (c), 2024 The Musketeers                                         */
 /*----------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------
  History
- Mar.21/2024  COQ  File created.
+ Apr.18/2024  COQ  File created.
  -----------------------------------------------------------------------------*/
-package com.themusketeers.mktrsjpsreactivespringbootstarter;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+package com.themusketeers.jps.common.constants;
 
 /**
- * Unit tests for Application class.
+ * Constants for the Auto Configuration.
  *
  * @author COQ - Carlos Adolfo Ortiz Q.
  */
-@SpringBootTest
-class ApplicationTests {
+public class ConfigurationConstants {
+    public static final String CONFIGURING_JPS_WITH_PROPERTIES = "Configuring JsonPlaceHolderService with properties: {}";
 
-    @Test
-    void contextLoads() {
+    /**
+     * Utility class, thus no constructor allowed.
+     */
+    private ConfigurationConstants() {
     }
-
 }
