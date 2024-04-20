@@ -1,0 +1,40 @@
+:toc: macro
+:toclevels: 5
+:toc-placement!:
+
+= mktrs-jps-reactive-spring-boot-starter
+
+V2024.1.0
+
+This is considered a demo library to showcase how to build a *Spring Boot Starter*.
+As this is an ynchronous, it uses *_WebClientClient_* as the underlying HTTP client to communicate to external endpoints (requires *Spring Boot 3.0*).
+Look in the https://www.youtube.com/watch?v=9m1bC57oWrc[How to create your own custom Spring Boot Starter^] (it uses *_RestClient_*).
+
+toc::[]
+
+== Dependency Libraries
+
+The following table indicates the tracked components needed for this project (notice that many of them may be not
+listed here).
+
+.Components
+[%header,cols="10%, 20%, 70%"]
+|===
+||Component|Version
+|1|JDK|21
+|2|Spring Boot|3.2.5
+|===
+
+== References
+
+=== Spring Boot Starter
+* https://www.youtube.com/watch?v=9m1bC57oWrc[How to create your own custom Spring Boot Starter^]
+
+=== Code Coverage
+* https://medium.com/@truongbui95/jacoco-code-coverage-with-spring-boot-835af8debc68[JaCoCo Code Coverage with Spring Boot^]
+
+=== RestClient/WebClient/RestTemplate
+* https://digma.ai/restclient-vs-webclient-vs-resttemplate/[RestClient vs. WebClient vs RestTemplate: Choosing the right library to call REST API in Spring ‌Boot - Jan.8/2024^]
+
+=== AssertJ
+* https://www.baeldung.com/assertj-exception-assertion[AssertJ Exception Assertions^]
