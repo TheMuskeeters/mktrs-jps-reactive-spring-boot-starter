@@ -4,7 +4,7 @@
 
 = mktrs-jps-reactive-spring-boot-starter
 
-V2024.1.0
+V2025.1.0
 
 This is considered a demo library to showcase how to build a *Spring Boot Starter*.
 As this is an ynchronous, it uses *_WebClientClient_* as the underlying HTTP client to communicate to external endpoints (requires *Spring Boot 3.0*).

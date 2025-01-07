@@ -5,12 +5,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.0</version>
+        <version>3.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.themusketeers</groupId>
     <artifactId>mktrs-jps-reactive-spring-boot-starter</artifactId>
-    <version>2024.1.0</version>
+    <version>2025.1.0</version>
     <name>mktrs-jps-reactive-spring-boot-starter</name>
     <description>Spring Boot Starter (Reactive) for JsonPlaceholder Service</description>
     <properties>
