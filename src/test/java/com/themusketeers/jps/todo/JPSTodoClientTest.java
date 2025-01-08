@@ -9,20 +9,18 @@
 package com.themusketeers.jps.todo;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.themusketeers.jps.common.config.JsonPlaceholderServiceConfiguration;
 import com.themusketeers.jps.common.config.JsonPlaceholderServiceProperties;
+import com.themusketeers.jps.common.config.WebClientTestConfig;
 import com.themusketeers.jps.todo.model.Todo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.autoconfigure.web.client.RestClientAutoConfiguration;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.test.StepVerifier;
 
 /**
@@ -48,7 +46,8 @@ class JPSTodoClientTest {
     public static final String RECORD_NOT_FOUND_MESSAGE = "404 Not Found";
 
     private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
-        .withConfiguration(AutoConfigurations.of(RestClientAutoConfiguration.class, JsonPlaceholderServiceConfiguration.class));
+        .withConfiguration(AutoConfigurations.of(RestClientAutoConfiguration.class, JsonPlaceholderServiceConfiguration.class))
+        .withUserConfiguration(WebClientTestConfig.class);
 
     @Test
     @DisplayName("Verify that the beans Todo Rest Client are present.")
@@ -103,9 +102,12 @@ class JPSTodoClientTest {
                 var expectedTodo = buildTodo();
                 var todo = todoClient.findById(TODO_ID_1);
 
-                assertThat(todo)
-                    .isNotNull()
-                    .isEqualTo(expectedTodo);
+                StepVerifier.create(todo)
+                    .assertNext(t ->
+                        assertThat(t)
+                            .isNotNull()
+                            .isEqualTo(expectedTodo))
+                    .verifyComplete();
             });
     }
 
@@ -115,15 +117,21 @@ class JPSTodoClientTest {
         contextRunner
             .run(context -> {
                 var todoClient = context.getBean(JPSTodoClient.class);
+                var todo = todoClient.findById(TODO_ID_0);
 
-                assertThatThrownBy(() -> todoClient.findById(TODO_ID_0))
-                    .isInstanceOfSatisfying(HttpClientErrorException.class, e ->
-                        assertThat(e.getStatusCode())
-                            .isNotNull()
-                            .satisfies(statusCode -> {
-                                assertThat(statusCode.is4xxClientError()).isTrue();
-                                assertThat(statusCode.value()).isEqualTo(HttpStatus.NOT_FOUND.value());
-                            })).hasMessageContaining(RECORD_NOT_FOUND_MESSAGE);
+                StepVerifier.create(todo)
+                    .expectErrorSatisfies(throwable -> {
+                        assertThat(throwable)
+                            .isInstanceOfSatisfying(WebClientResponseException.class, e -> {
+                                assertThat(e.getStatusCode())
+                                    .isNotNull()
+                                    .satisfies(statusCode -> {
+                                        assertThat(statusCode.is4xxClientError()).isTrue();
+                                        assertThat(statusCode.value()).isEqualTo(HttpStatus.NOT_FOUND.value());
+                                    });
+                            });
+                    })
+                    .verify();
             });
     }
 
@@ -136,10 +144,13 @@ class JPSTodoClientTest {
                 var todo = buildTodoCreate();
                 var todoCreated = todoClient.create(todo);
 
-                assertThat(todoCreated)
-                    .isNotNull()
-                    .extracting(TODO_ID_FIELD)
-                    .isEqualTo(TODO_ID_CREATED);
+                StepVerifier.create(todoCreated)
+                    .assertNext(t ->
+                        assertThat(t)
+                            .isNotNull()
+                            .extracting(TODO_ID_FIELD)
+                            .isEqualTo(TODO_ID_CREATED))
+                    .verifyComplete();
             });
     }
 
@@ -152,9 +163,12 @@ class JPSTodoClientTest {
                 var updateTodo = buildTodoUpdate();
                 var updatedTodo = todoClient.update(TODO_ID_1, updateTodo);
 
-                assertThat(updatedTodo)
-                    .isNotNull()
-                    .isEqualTo(updateTodo);
+                StepVerifier.create(updatedTodo)
+                    .assertNext(t ->
+                        assertThat(t)
+                            .isNotNull()
+                            .isEqualTo(updateTodo))
+                    .verifyComplete();
             });
     }
 
