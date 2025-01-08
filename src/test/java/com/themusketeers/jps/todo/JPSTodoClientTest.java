@@ -16,11 +16,14 @@ import com.themusketeers.jps.common.config.JsonPlaceholderServiceProperties;
 import com.themusketeers.jps.todo.model.Todo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.autoconfigure.web.client.RestClientAutoConfiguration;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.test.StepVerifier;
 
 /**
  * Unit Test for JPSTodoClient.
@@ -85,9 +88,9 @@ class JPSTodoClientTest {
                 var todoClient = context.getBean(JPSTodoClient.class);
                 var todos = todoClient.findAll();
 
-                assertThat(todos)
-                    .isNotNull()
-                    .hasSize(TODO_ITEMS_EXPECTED);
+                StepVerifier.create(todos)
+                    .expectNextCount(TODO_ITEMS_EXPECTED)
+                    .verifyComplete();
             });
     }
 
@@ -163,9 +166,12 @@ class JPSTodoClientTest {
                 var todoClient = context.getBean(JPSTodoClient.class);
                 var removedTodo = todoClient.delete(TODO_ID_1);
 
-                assertThat(removedTodo)
-                    .isNotNull()
-                    .satisfies(result -> assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK));
+                StepVerifier.create(removedTodo)
+                    .assertNext(response -> {
+                        assertThat(response).isNotNull();
+                        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+                    })
+                    .verifyComplete();
             });
     }
 
