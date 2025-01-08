@@ -22,7 +22,7 @@ listed here).
 |===
 ||Component|Version
 |1|JDK|21
-|2|Spring Boot|3.2.5
+|2|Spring Boot|3.4.1
 |===
 
 == References
