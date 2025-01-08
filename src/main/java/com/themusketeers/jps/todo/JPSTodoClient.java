@@ -61,7 +61,8 @@ public class JPSTodoClient implements JPSClient<Todo> {
     @Override
     public Mono<Todo> update(Integer id, Todo todo) {
         return webClient.put()
-            .uri(TODOS_API)
+//            .uri(TODOS_API, id)
+            .uri(TODOS_API_ID, id)
             .bodyValue(todo)
             .retrieve()
             .bodyToMono(Todo.class);
