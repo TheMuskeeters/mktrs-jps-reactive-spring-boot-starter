@@ -7,7 +7,7 @@
 V2025.1.0
 
 This is considered a demo library to showcase how to build a *Spring Boot Starter*.
-As this is an ynchronous, it uses *_WebClientClient_* as the underlying HTTP client to communicate to external endpoints (requires *Spring Boot 3.0*).
+As this is an asynchronous, it uses *_WebClientClient_* as the underlying HTTP client to communicate to external endpoints (requires *Spring Boot 3.0*).
 Look in the https://www.youtube.com/watch?v=9m1bC57oWrc[How to create your own custom Spring Boot Starter^] (it uses *_RestClient_*).
 
 toc::[]
