@@ -25,8 +25,8 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(JsonPlaceholderServiceProperties.class)
-public class JsonPlaceholderServiceConfiguration {
-    private static final Logger log = LoggerFactory.getLogger(JsonPlaceholderServiceConfiguration.class);
+public class JsonPlaceholderServiceAutoConfiguration {
+    private static final Logger log = LoggerFactory.getLogger(JsonPlaceholderServiceAutoConfiguration.class);
 
     private final JsonPlaceholderServiceProperties jpsProperties;
 
@@ -35,7 +35,7 @@ public class JsonPlaceholderServiceConfiguration {
      *
      * @param jpsProperties Includes a property based data reference.
      */
-    public JsonPlaceholderServiceConfiguration(JsonPlaceholderServiceProperties jpsProperties) {
+    public JsonPlaceholderServiceAutoConfiguration(JsonPlaceholderServiceProperties jpsProperties) {
         log.info(CONFIGURING_JPS_WITH_PROPERTIES, jpsProperties);
         this.jpsProperties = jpsProperties;
     }

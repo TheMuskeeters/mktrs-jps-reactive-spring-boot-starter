@@ -10,7 +10,7 @@ package com.themusketeers.jps.todo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.themusketeers.jps.common.config.JsonPlaceholderServiceConfiguration;
+import com.themusketeers.jps.common.config.JsonPlaceholderServiceAutoConfiguration;
 import com.themusketeers.jps.common.config.JsonPlaceholderServiceProperties;
 import com.themusketeers.jps.common.config.WebClientTestConfig;
 import com.themusketeers.jps.todo.model.Todo;
@@ -46,7 +46,7 @@ class JPSTodoClientTest {
     public static final String RECORD_NOT_FOUND_MESSAGE = "404 Not Found";
 
     private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
-        .withConfiguration(AutoConfigurations.of(RestClientAutoConfiguration.class, JsonPlaceholderServiceConfiguration.class))
+        .withConfiguration(AutoConfigurations.of(RestClientAutoConfiguration.class, JsonPlaceholderServiceAutoConfiguration.class))
         .withUserConfiguration(WebClientTestConfig.class);
 
     @Test
